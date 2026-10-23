@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0e" id="metaThemeColor">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content=">_ expense">
+  <title>>_ expense</title>
+  <!-- Self-contained Data-URI App Icons for Android & iOS Home Screen -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%2302040a'/%3E%3Crect x='28' y='28' width='456' height='456' rx='92' fill='none' stroke='%2338bdf8' stroke-width='16' stroke-opacity='0.35'/%3E%3Ctext x='96' y='320' font-family='monospace' font-weight='900' font-size='210' fill='%2338bdf8'%3E%26gt;_%3C/text%3E%3Ccircle cx='400' cy='136' r='36' fill='%2334d6a3'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%2302040a'/%3E%3Ctext x='96' y='320' font-family='monospace' font-weight='900' font-size='210' fill='%2338bdf8'%3E%26gt;_%3C/text%3E%3Ccircle cx='400' cy='136' r='36' fill='%2334d6a3'/%3E%3C/svg%3E">
+  <link rel="manifest" id="pwaManifestLink" href="data:application/manifest+json,%7B%22name%22%3A%22%3E_%20expense%22%2C%22short_name%22%3A%22expense%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2302040a%22%2C%22theme_color%22%3A%22%2302040a%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%2520viewBox%3D%270%25200%2520512%2520512%27%253E%253Crect%2520width%3D%27512%27%2520height%3D%27512%27%2520rx%3D%27112%27%2520fill%3D%27%252302040a%27%2F%253E%253Ctext%2520x%3D%2796%27%2520y%3D%27320%27%2520font-family%3D%27monospace%27%2520font-weight%3D%27900%27%2520font-size%3D%27210%27%2520fill%3D%27%252338bdf8%27%253E%2526gt%3B_%253C%2Ftext%253E%253Ccircle%2520cx%3D%27400%27%2520cy%3D%27136%27%2520r%3D%2736%27%2520fill%3D%27%252334d6a3%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+  <!-- Google Fonts for Liquid Glass, Mono Old-UI, Neo-Brutalism & Brainrot -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    /* ===== THEME TOKENS ===== */
+    /* White Theme: Luminous Liquid Glass */
+    :root, [data-theme="light"] {
+      --bg: #e2effc;
+      --bg-glow1: rgba(56, 189, 248, 0.55);
+      --bg-glow2: rgba(99, 102, 241, 0.35);
+      --bg-glow3: rgba(45, 212, 191, 0.42);
+      --surface: rgba(255, 255, 255, 0.44);
+      --surface2: rgba(255, 255, 255, 0.68);
+      --field: rgba(255, 255, 255, 0.52);
+      --line: rgba(255, 255, 255, 0.82);
+      --text: #0c1e4a;
+      --muted: #435b8a;
+      --dim: #7b91ba;
+      --violet: #0284c7;
+      --violet2: #38bdf8;
+      --red: #e11d48;
+      --green: #059669;
+      --chip-active-text: #ffffff;
+      --color-scheme: light;
+      --mono: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --num-font: 'Space Grotesk', sans-serif;
+      --r-lg: 20px; --r-md: 14px; --r-sm: 10px;
+      --shadow: 0 8px 28px rgba(15, 52, 115, 0.11), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      --blur: blur(28px) saturate(200%);
+      --tile-bg: linear-gradient(135deg, rgba(2, 132, 199, 0.88), rgba(30, 64, 175, 0.92));
+      --tile-bg2: linear-gradient(135deg, rgba(14, 165, 233, 0.85), rgba(37, 99, 235, 0.88));
+      --tile-text: #ffffff;
+      --tile-sub: rgba(255, 255, 255, 0.8);
+      --btn-bg: linear-gradient(135deg, #0284c7 0%, #2563eb 55%, #1d4ed8 100%);
+      --btn-text: #ffffff;
+      --sheet-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(240, 248, 255, 0.72));
+      --sheet-text: #0c1e4a;
+      --sheet-muted: #435b8a;
+      --sheet-dim: #7b91ba;
+      --sheet-line: rgba(2, 132, 199, 0.16);
+      --sheet-accent: #0284c7;
+    }
+
+    /* Dark Theme: Deep Abyssal Liquid Glass */
+    [data-theme="dark"] {
+      --bg: #02040a;
+      --bg-glow1: rgba(29, 78, 216, 0.32);
+      --bg-glow2: rgba(6, 182, 212, 0.18);
+      --bg-glow3: rgba(79, 70, 229, 0.18);
+      --surface: rgba(15, 25, 50, 0.42);
+      --surface2: rgba(22, 36, 70, 0.62);
+      --field: rgba(10, 18, 38, 0.52);
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f0f6ff;
+      --muted: #8ca4ce;
+      --dim: #52668f;
+      --violet: #38bdf8;
+      --violet2: #6366f1;
+      --red: #fb7185;
+      --green: #34d399;
+      --chip-active-text: #020617;
+      --color-scheme: dark;
+      --mono: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --num-font: 'Space Grotesk', sans-serif;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+      --blur: blur(28px) saturate(190%);
+      --tile-bg: linear-gradient(135deg, rgba(30, 64, 175, 0.68), rgba(15, 23, 42, 0.85));
+      --tile-bg2: linear-gradient(135deg, rgba(2, 132, 199, 0.62), rgba(30, 58, 138, 0.82));
+      --tile-text: #f8fafc;
+      --tile-sub: rgba(226, 232, 240, 0.75);
+      --btn-bg: linear-gradient(135deg, #38bdf8 0%, #2563eb 55%, #1d4ed8 100%);
+      --btn-text: #ffffff;
+      --sheet-bg: linear-gradient(180deg, rgba(15, 25, 52, 0.52), rgba(6, 11, 26, 0.78));
+      --sheet-text: #f0f6ff;
+      --sheet-muted: #8ca4ce;
+      --sheet-dim: #52668f;
+      --sheet-line: rgba(255, 255, 255, 0.12);
+      --sheet-accent: #38bdf8;
+    }
+
+    /* Mono Theme: Simplest 2-Color Old UI (Pure Black & White) */
+    [data-theme="mono"] {
+      --bg: #000000;
+      --bg-glow1: transparent;
+      --bg-glow2: transparent;
+      --bg-glow3: transparent;
+      --surface: #000000;
+      --surface2: #000000;
+      --field: #000000;
+      --line: #ffffff;
+      --text: #ffffff;
+      --muted: #ffffff;
+      --dim: #999999;
+      --violet: #ffffff;
+      --violet2: #ffffff;
+      --red: #ffffff;
+      --green: #ffffff;
+      --chip-active-text: #000000;
+      --color-scheme: dark;
+      --mono: 'JetBrains Mono', monospace;
+      --num-font: 'JetBrains Mono', monospace;
+      --r-lg: 4px; --r-md: 4px; --r-sm: 4px;
+      --shadow: none;
+      --blur: none;
+      --tile-bg: #000000;
+      --tile-bg2: #000000;
+      --tile-text: #ffffff;
+      --tile-sub: #ffffff;
+      --btn-bg: #ffffff;
+      --btn-text: #000000;
+      --sheet-bg: #000000;
+      --sheet-text: #ffffff;
+      --sheet-muted: #ffffff;
+      --sheet-dim: #999999;
+      --sheet-line: #ffffff;
+      --sheet-accent: #ffffff;
+    }
+    [data-theme="mono"] body { background: #000000; }
+    [data-theme="mono"] .brand-Prompt { color: #000000; background: #ffffff; border: 1px solid #ffffff; border-radius: 4px; box-shadow: none; }
+    [data-theme="mono"] .icon-btn,
+    [data-theme="mono"] .eye-btn,
+    [data-theme="mono"] .modal-close,
+    [data-theme="mono"] .date-pill,
+    [data-theme="mono"] .note-in,
+    [data-theme="mono"] .prompt-line,
+    [data-theme="mono"] .op-btn,
+    [data-theme="mono"] .cat-chip,
+    [data-theme="mono"] .acct-chip,
+    [data-theme="mono"] .cat-add-chip,
+    [data-theme="mono"] .acct-tile,
+    [data-theme="mono"] .acct-add,
+    [data-theme="mono"] .entry-card,
+    [data-theme="mono"] #datesLedger,
+    [data-theme="mono"] .nd-add-btn,
+    [data-theme="mono"] .sm-btn,
+    [data-theme="mono"] .mini-in,
+    [data-theme="mono"] .edit-in,
+    [data-theme="mono"] .edit-box {
+      border-radius: 4px !important;
+      box-shadow: none !important;
+      border-color: #ffffff !important;
+      background: #000000;
+      color: #ffffff;
+    }
+    [data-theme="mono"] .enter-btn,
+    [data-theme="mono"] .mini-btn:not(.ghost),
+    [data-theme="mono"] .cat-chip.active,
+    [data-theme="mono"] .acct-chip.active,
+    [data-theme="mono"] .acct-tile.armed {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: 1px solid #ffffff !important;
+      border-radius: 4px !important;
+      box-shadow: none !important;
+    }
+    [data-theme="mono"] .acct-tile.armed .top,
+    [data-theme="mono"] .acct-tile.armed .bal,
+    [data-theme="mono"] .acct-tile.armed .hint { color: #000000 !important; }
+    [data-theme="mono"] .dot { background: currentColor !important; box-shadow: none !important; border: 1px solid currentColor; }
+    [data-theme="mono"] .color-swatch-btn { filter: grayscale(100%) contrast(2); border-radius: 2px; }
+    [data-theme="mono"] #datesLedger::before { display: none; }
+    [data-theme="mono"] #datesLedger { padding-top: 12px; }
+
+    /* Brainrot Theme: Cyber Arcade Neon */
+    [data-theme="brainrot"] {
+      --bg: #0b0118; --bg-glow1: rgba(255,0,127,.30); --bg-glow2: rgba(0,240,255,.24); --bg-glow3: rgba(57,255,20,.20);
+      --surface: rgba(34,6,66,.88); --surface2: #2a0a52;
+      --field: #0a0016;
+      --line: #ff007f;
+      --text: #39ff14; --muted: #00f0ff; --dim: #b829ff;
+      --violet: #ff007f; --violet2: #ffe600;
+      --red: #ff2a00; --green: #39ff14;
+      --chip-active-text: #05000a;
+      --color-scheme: dark;
+      --mono: 'Chakra Petch', sans-serif;
+      --num-font: 'Chakra Petch', sans-serif;
+      --shadow: 0 0 0 transparent;
+      --blur: none;
+      --tile-bg: linear-gradient(135deg,#ff007f,#7a00ff); --tile-bg2: linear-gradient(135deg,#00f0ff,#39ff14);
+      --tile-text:#fff; --tile-sub:#ffe600;
+      --btn-bg: linear-gradient(90deg,#ff007f,#ffe600,#39ff14,#00f0ff); --btn-text:#000;
+      --sheet-bg: linear-gradient(180deg,#2a0a52,#16042c); --sheet-text:#39ff14; --sheet-muted:#00f0ff; --sheet-dim:#b829ff;
+      --sheet-line:#ff007f; --sheet-accent:#ffe600;
+    }
+    [data-theme="brainrot"] .acct-tile:nth-child(even) { --tile-text:#05000a; --tile-sub:#3b0a6b; }
+    @keyframes brainrotPulse {
+      0%,100% { box-shadow: 0 0 10px rgba(57,255,20,.35), inset 0 0 6px rgba(255,0,127,.2); }
+      50% { box-shadow: 0 0 18px rgba(255,0,127,.55), inset 0 0 10px rgba(0,240,255,.3); }
+    }
+    [data-theme="brainrot"] .brand-Prompt { transform: rotate(-3deg); box-shadow: 0 0 10px #ff007f; background: linear-gradient(135deg,#ff007f,#39ff14); color:#000; }
+    [data-theme="brainrot"] .entry-card { border: 2px solid #39ff14; animation: brainrotPulse 3s infinite ease-in-out; }
+    [data-theme="brainrot"] .acct-tile { border: 2px solid #ffe600; box-shadow: 3px 3px 0 #000, 3px 3px 0 1px #00f0ff; }
+    [data-theme="brainrot"] .prompt-line { border: 2px dashed #00f0ff; box-shadow: inset 0 0 10px rgba(0,240,255,.25); }
+    [data-theme="brainrot"] .live-sum { color:#ffe600; text-shadow: 0 0 8px rgba(255,230,0,.8); }
+    [data-theme="brainrot"] .enter-btn { border: 2px solid #fff; text-transform: uppercase; font-weight: 700; letter-spacing:.8px; box-shadow: 0 4px 14px rgba(255,0,127,.55); }
+    [data-theme="brainrot"] .op-btn { border-color:#00f0ff; color:#ffe600; box-shadow: 2px 2px 0 #ff007f; }
+    [data-theme="brainrot"] .nd-title { color:#ffe600; text-shadow: 0 0 6px rgba(255,230,0,.5); }
+    [data-theme="brainrot"] #datesLedger { border: 2px solid #ff007f; box-shadow: 0 0 18px rgba(255,0,127,.3); }
+    [data-theme="brainrot"] .cat-chip, [data-theme="brainrot"] .acct-chip { border-color: #00f0ff; }
+
+    /* ===== NEO-BRUTALISM THEME ===== */
+    [data-theme="neobrutalism"] {
+      --bg: #FFFDF5;
+      --bg-glow1: transparent;
+      --bg-glow2: transparent;
+      --bg-glow3: transparent;
+      --surface: #FFFFFF;
+      --surface2: #FFD23F;
+      --field: #FFFFFF;
+      --line: #0A0A0A;
+      --text: #0A0A0A;
+      --muted: #222222;
+      --dim: #555555;
+      --violet: #FF6B6B;
+      --violet2: #FFD23F;
+      --red: #FF4757;
+      --green: #88D498;
+      --chip-active-text: #0A0A0A;
+      --color-scheme: light;
+      --mono: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      --num-font: 'JetBrains Mono', monospace;
+      --r-lg: 12px;
+      --r-md: 10px;
+      --r-sm: 8px;
+      --shadow: 4px 4px 0px #0A0A0A;
+      --blur: none;
+      --tile-bg: #FFD23F;
+      --tile-bg2: #74B9FF;
+      --tile-text: #0A0A0A;
+      --tile-sub: #1A1A1A;
+      --btn-bg: #FFD23F;
+      --btn-text: #0A0A0A;
+      --sheet-bg: #FFFFFF;
+      --sheet-text: #0A0A0A;
+      --sheet-muted: #222222;
+      --sheet-dim: #555555;
+      --sheet-line: #0A0A0A;
+      --sheet-accent: #FF6B6B;
+    }
+    [data-theme="neobrutalism"] body {
+      background: #FFFDF5;
+    }
+    [data-theme="neobrutalism"] .brand-Prompt {
+      background: #FFD23F;
+      color: #0A0A0A;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .icon-btn,
+    [data-theme="neobrutalism"] .eye-btn,
+    [data-theme="neobrutalism"] .modal-close {
+      background: #FFFFFF;
+      color: #0A0A0A;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      font-weight: 700;
+    }
+    [data-theme="neobrutalism"] .acct-tile {
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      color: #0A0A0A;
+      --tile-text: #0A0A0A;
+      --tile-sub: #1A1A1A;
+    }
+    [data-theme="neobrutalism"] .acct-tile:nth-child(4n+1) { background: #FFD23F; }
+    [data-theme="neobrutalism"] .acct-tile:nth-child(4n+2) { background: #74B9FF; }
+    [data-theme="neobrutalism"] .acct-tile:nth-child(4n+3) { background: #88D498; }
+    [data-theme="neobrutalism"] .acct-tile:nth-child(4n+4) { background: #C4B5FD; }
+    [data-theme="neobrutalism"] .acct-tile::before,
+    [data-theme="neobrutalism"] .acct-tile::after {
+      display: none;
+    }
+    [data-theme="neobrutalism"] .acct-tile .top,
+    [data-theme="neobrutalism"] .acct-tile .bal {
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .acct-tile.armed {
+      background: #FF6B6B !important;
+      color: #0A0A0A !important;
+      border: 3px solid #0A0A0A !important;
+      box-shadow: 2px 2px 0px #0A0A0A !important;
+      transform: translate(2px, 2px);
+    }
+    [data-theme="neobrutalism"] .acct-tile.armed .top,
+    [data-theme="neobrutalism"] .acct-tile.armed .bal,
+    [data-theme="neobrutalism"] .acct-tile.armed .hint {
+      color: #0A0A0A !important;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .acct-add {
+      background: #FFFFFF;
+      border: 3px dashed #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      color: #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .acct-add .plus {
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .dot {
+      border: 2px solid #0A0A0A;
+      box-shadow: none;
+    }
+    [data-theme="neobrutalism"] .entry-card,
+    [data-theme="neobrutalism"] .add-acct-box,
+    [data-theme="neobrutalism"] .add-cat-box,
+    [data-theme="neobrutalism"] .modal-card {
+      background: #FFFFFF;
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .date-pill,
+    [data-theme="neobrutalism"] .note-in,
+    [data-theme="neobrutalism"] .mini-in,
+    [data-theme="neobrutalism"] .edit-in,
+    [data-theme="neobrutalism"] .about-box,
+    [data-theme="neobrutalism"] .theme-btn {
+      background: #FFFDF5;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 600;
+    }
+    [data-theme="neobrutalism"] .theme-btn.active {
+      background: #FFD23F;
+      border-color: #0A0A0A;
+      box-shadow: 2px 2px 0px #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .prompt-line {
+      background: #C4B5FD;
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .chev,
+    [data-theme="neobrutalism"] .expr-input {
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .expr-input::placeholder {
+      color: rgba(10, 10, 10, 0.45);
+    }
+    [data-theme="neobrutalism"] .live-sum {
+      color: #0A0A0A;
+      background: #FFD23F;
+      border: 2.5px solid #0A0A0A;
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .op-btn {
+      background: #FFFFFF;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .cat-chip,
+    [data-theme="neobrutalism"] .acct-chip {
+      background: #FFFFFF;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 700;
+    }
+    [data-theme="neobrutalism"] .cat-chip.active,
+    [data-theme="neobrutalism"] .acct-chip.active {
+      border: 3px solid #0A0A0A;
+      box-shadow: 1px 1px 0px #0A0A0A;
+      transform: translate(2px, 2px);
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .cat-chip.armed {
+      background: #FF6B6B !important;
+      color: #0A0A0A !important;
+      border: 3px solid #0A0A0A !important;
+      box-shadow: 1px 1px 0px #0A0A0A !important;
+    }
+    [data-theme="neobrutalism"] .cat-add-chip {
+      background: #88D498;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .enter-btn,
+    [data-theme="neobrutalism"] .mini-btn {
+      background: #FFD23F;
+      color: #0A0A0A;
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .mini-btn.ghost {
+      background: #FFFFFF;
+      color: #0A0A0A;
+      border: 3px solid #0A0A0A;
+      box-shadow: 3px 3px 0px #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .undo-bar {
+      background: #88D498;
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 700;
+    }
+    [data-theme="neobrutalism"] #datesLedger {
+      background: #FFFFFF;
+      border: 3px solid #0A0A0A;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px #0A0A0A;
+    }
+    [data-theme="neobrutalism"] #datesLedger::before {
+      background: #0A0A0A;
+      opacity: 1;
+      height: 5px;
+      border-radius: 2px;
+    }
+    [data-theme="neobrutalism"] .note-date-header {
+      background: #74B9FF;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+    }
+    [data-theme="neobrutalism"] .nd-title,
+    [data-theme="neobrutalism"] .nd-total,
+    [data-theme="neobrutalism"] .nd-caret {
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .nd-add-btn {
+      background: #FFD23F;
+      color: #0A0A0A;
+      border: 2.5px solid #0A0A0A;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .exp-row {
+      border-bottom: 2px solid #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .sm-btn {
+      background: #FFD23F;
+      border: 2.5px solid #0A0A0A;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #0A0A0A;
+      color: #0A0A0A;
+      font-weight: 800;
+    }
+    [data-theme="neobrutalism"] .sm-btn.del {
+      background: #FF6B6B;
+      color: #0A0A0A;
+      border-color: #0A0A0A;
+    }
+    [data-theme="neobrutalism"] .edit-box {
+      background: #FFFDF5;
+      border: 3px solid #0A0A0A;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #0A0A0A;
+    }
+    /* Physical push-down active state on buttons in Neo-Brutalism */
+    [data-theme="neobrutalism"] .enter-btn:active,
+    [data-theme="neobrutalism"] .op-btn:active,
+    [data-theme="neobrutalism"] .icon-btn:active,
+    [data-theme="neobrutalism"] .eye-btn:active,
+    [data-theme="neobrutalism"] .mini-btn:active,
+    [data-theme="neobrutalism"] .cat-chip:active,
+    [data-theme="neobrutalism"] .acct-chip:active,
+    [data-theme="neobrutalism"] .cat-add-chip:active,
+    [data-theme="neobrutalism"] .acct-tile:active,
+    [data-theme="neobrutalism"] .acct-add:active,
+    [data-theme="neobrutalism"] .nd-add-btn:active,
+    [data-theme="neobrutalism"] .sm-btn:active,
+    [data-theme="neobrutalism"] .theme-btn:active,
+    [data-theme="neobrutalism"] .modal-close:active {
+      transform: translate(3px, 3px) !important;
+      box-shadow: 0px 0px 0px #0A0A0A !important;
+    }
+
+    /* ===== BASE ===== */
+    html, body {
+      background: var(--bg); color: var(--text); font-family: var(--mono);
+      min-height: 100vh; overflow-x: hidden; user-select: none;
+    /* ===== BASE (COMPACT LAYOUT) ===== */
+    html, body {
+      background: var(--bg); color: var(--text); font-family: var(--mono);
+      min-height: 100vh; overflow-x: hidden; user-select: none;
+    }
+    body {
+      background:
+        radial-gradient(62% 42% at 6% 4%, var(--bg-glow1) 0%, transparent 72%),
+        radial-gradient(55% 42% at 96% 24%, var(--bg-glow2) 0%, transparent 72%),
+        radial-gradient(60% 45% at 25% 96%, var(--bg-glow3) 0%, transparent 72%),
+        var(--bg);
+      background-attachment: fixed;
+      transition: background .2s ease, color .2s ease;
+    }
+    .app-container {
+      max-width: 460px; margin: 0 auto;
+      padding: max(env(safe-area-inset-top, 8px), 8px) 12px calc(env(safe-area-inset-bottom, 14px) + 14px);
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
+    input, select, button { font-family: var(--mono); }
+
+    /* shared glass surface */
+    .entry-card, .add-acct-box, .modal-card {
+      background: var(--surface); border: 1px solid var(--line);
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 6px 2px 8px; }
+    .brand { font-size: 17px; font-weight: 800; letter-spacing: -.4px; display: flex; align-items: center; gap: 8px; }
+    .brand-Prompt {
+      color: #fff; background: linear-gradient(135deg, var(--violet), var(--violet2));
+      padding: 3px 8px; border-radius: 9px; font-size: 13px; font-weight: 800; transition: all .2s;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+    .top-actions { display: flex; align-items: center; gap: 6px; }
+    .icon-btn {
+      background: var(--surface); border: 1px solid var(--line); color: var(--text);
+      font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 999px; cursor: pointer;
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+    }
+    .icon-btn:active { transform: scale(.96); }
+
+    /* ===== SETTINGS MODAL ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(2, 6, 23, 0.55); display: none;
+      align-items: center; justify-content: center; padding: 14px; z-index: 1000;
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      width: 100%; max-width: 380px; border-radius: 22px; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      background: var(--surface2);
+    }
+    [data-theme="light"] .modal-card { background: rgba(255,255,255,.84); }
+    [data-theme="dark"] .modal-card { background: rgba(10, 18, 38, 0.88); }
+    [data-theme="mono"] .modal-card { background: #000000; border: 1px solid #ffffff; border-radius: 4px; }
+    [data-theme="brainrot"] .modal-card { background:#16042c; border: 2px solid #39ff14; }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; }
+    .modal-title { font-size: 15px; font-weight: 700; }
+    .modal-close {
+      background: var(--field); border: 1px solid var(--line); color: var(--text);
+      border-radius: 999px; padding: 4px 11px; font-size: 11px; font-weight: 600; cursor: pointer;
+    }
+    .settings-sec { display: flex; flex-direction: column; gap: 6px; }
+    .settings-lbl { font-size: 10px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+    .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .theme-btn {
+      background: var(--field); border: 1px solid var(--line); color: var(--text);
+      font-size: 11px; font-weight: 600; padding: 10px 6px; border-radius: 14px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .theme-btn.active { border-color: var(--violet); font-weight: 700; box-shadow: 0 0 0 2px var(--violet); }
+    .theme-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,.75); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+    .about-box {
+      background: var(--field); border: 1px solid var(--line); border-radius: var(--r-md);
+      padding: 10px 12px; font-size: 11px; line-height: 1.55; color: var(--muted);
+    }
+    .about-box strong { color: var(--text); }
+
+    /* ===== SECTION HEADS ===== */
+    .sec-head {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; font-weight: 700; color: var(--text); margin: 2px 2px 6px;
+    }
+    .sec-head-right { display: flex; align-items: center; gap: 8px; }
+    .eye-btn {
+      background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+      border-radius: 999px; padding: 3px 10px; font-size: 10px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+
+    /* ===== REDESIGNED COMPACT ACCOUNT CARDS ===== */
+    .acct-strip {
+      display: flex; gap: 8px; overflow-x: auto; padding: 2px 1px 8px;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch; touch-action: pan-x; scroll-behavior: smooth;
+    }
+    .acct-strip::-webkit-scrollbar { display: none; }
+    .acct-tile {
+      flex: 0 0 auto; min-width: 130px; border-radius: 16px; padding: 9px 12px;
+      background: var(--tile-bg); color: var(--tile-text); border: 1px solid var(--line);
+      cursor: pointer; position: relative; overflow: hidden; transition: all .15s;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 5px;
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+    .acct-tile:nth-child(even) { background: var(--tile-bg2); }
+    .acct-tile .top {
+      display: flex; align-items: center; justify-content: space-between; gap: 6px;
+      font-size: 11px; font-weight: 700; color: var(--tile-text);
+      position: relative; z-index: 1;
+    }
+    .acct-tile .top-left {
+      display: flex; align-items: center; gap: 6px; min-width: 0;
+    }
+    .acct-tile .acct-tag {
+      font-size: 9px; font-weight: 700; opacity: 0.65; letter-spacing: 0.4px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px rgba(255,255,255,.65); }
+    .acct-tile .bal {
+      font-family: var(--num-font, var(--mono));
+      font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums;
+      letter-spacing: -.5px; line-height: 1.15; color: var(--tile-text); position: relative; z-index: 1;
+    }
+    .acct-tile .hint { font-size: 9.5px; color: var(--tile-sub); position: relative; z-index: 1; }
+    .acct-tile.armed, [data-theme] .acct-tile.armed {
+      background: linear-gradient(150deg,#ff6b73,#d62f3c); color: #fff; border-color: #fff; transform: scale(1.02);
+    }
+    .acct-tile.armed .top, .acct-tile.armed .bal, .acct-tile.armed .hint { color: #fff; font-weight: 700; }
+    [data-theme="brainrot"] .acct-tile.armed { background:#ff0055; border-color:#ffe600; box-shadow:0 0 12px #ff0055; }
+    [data-theme="brainrot"] .acct-tile.armed .bal, [data-theme="brainrot"] .acct-tile.armed .hint { color:#ffe600; }
+
+    .acct-add {
+      flex: 0 0 auto; min-width: 88px; border-radius: 16px; padding: 9px 12px;
+      background: var(--surface); border: 1.5px dashed var(--line); color: var(--text);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+    .acct-add .plus { font-size: 11.5px; color: var(--violet); font-weight: 700; }
+
+    .add-acct-box { border-radius: var(--r-lg); padding: 11px; margin-bottom: 8px; display: none; flex-direction: column; gap: 8px; }
+    .add-acct-box.open { display: flex; }
+    .add-row { display: flex; gap: 6px; align-items: center; }
+    .mini-in {
+      flex: 1; min-width: 0; background: var(--field); border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px; color: var(--text); font-size: 11.5px; outline: none;
+    }
+    .mini-in::placeholder, .note-in::placeholder, .edit-in::placeholder { color: var(--dim); }
+    .mini-in:focus, .note-in:focus, .edit-in:focus { border-color: var(--violet); }
+    .auto-Badge { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 9.5px; color: var(--muted); padding: 0 2px; }
+    .color-picker-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 5px; padding: 2px; align-items: center; }
+    .color-swatch-btn { width: 18px; height: 18px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0; margin: 0 auto; transition: transform .12s, border-color .12s; }
+    .color-swatch-btn.selected { border-color: var(--text); transform: scale(1.18); }
+    .mini-btn {
+      background: var(--btn-bg); color: var(--btn-text); border: 0; border-radius: 999px;
+      padding: 8px 13px; font-size: 11px; font-weight: 700; cursor: pointer;
+    }
+    .mini-btn.ghost { background: var(--field); color: var(--muted); font-weight: 600; border: 1px solid var(--line); }
+
+    /* ===== COMPACT ENTRY CARD ===== */
+    .entry-card { border-radius: 20px; padding: 11px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .entry-top-bar { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .date-pill {
+      display: inline-flex; align-items: center; gap: 5px; background: var(--field); border: 1px solid var(--line);
+      border-radius: 999px; padding: 5px 10px; font-size: 11px; color: var(--text); cursor: pointer; position: relative;
+    }
+    .date-pill input[type="date"] { background: transparent; border: 0; color: var(--text); font-size: 11px; font-weight: 600; outline: none; color-scheme: var(--color-scheme); }
+    .note-in {
+      flex: 1; min-width: 0; background: var(--field); border: 1px solid var(--line); border-radius: 999px;
+      padding: 6px 11px; font-size: 11px; color: var(--text); outline: none;
+    }
+    .prompt-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .prompt-line {
+      display: flex; align-items: baseline; gap: 6px; background: var(--field); border: 1px solid var(--line);
+      border-radius: 14px; padding: 9px 12px;
+    }
+    .prompt-line:focus-within { border-color: var(--violet); }
+    .chev { color: var(--violet); font-size: 17px; font-weight: 800; user-select: none; }
+    .expr-input {
+      flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--text);
+      font-family: var(--num-font, var(--mono));
+      font-size: 20px; font-weight: 700; letter-spacing: -.5px; font-variant-numeric: tabular-nums;
+    }
+    .expr-input::placeholder { color: var(--dim); font-weight: 500; }
+    .live-sum {
+      font-family: var(--num-font, var(--mono));
+      font-size: 17px; font-weight: 700; color: var(--violet); font-variant-numeric: tabular-nums; letter-spacing: -.4px; white-space: nowrap;
+    }
+    .math-op-bar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .op-btn {
+      background: var(--field); border: 1px solid var(--line); color: var(--text); font-size: 13.5px; font-weight: 700;
+      padding: 6px 0; border-radius: 10px; cursor: pointer; text-align: center; transition: transform .1s, border-color .12s;
+    }
+    .op-btn:active { transform: scale(.92); border-color: var(--violet); background: var(--surface2); }
+
+    .h-line {
+      display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; overflow-y: hidden; padding: 1px;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch; touch-action: pan-x; scroll-behavior: smooth; width: 100%;
+    }
+    .h-line::-webkit-scrollbar { display: none; }
+    .cat-chip, .acct-chip {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px;
+      background: var(--field); border: 1px solid var(--line); color: var(--text); font-size: 11.5px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all .15s;
+    }
+    .cat-chip.active, .acct-chip.active { color: #050814; font-weight: 700; border-color: transparent; box-shadow: 0 4px 10px rgba(0,0,0,.15); }
+    .cat-chip.armed { border-color: var(--red) !important; background: rgba(229,72,77,.18) !important; color: var(--red) !important; font-weight: 700; }
+    [data-theme="brainrot"] .cat-chip.armed { border-color:#ffe600 !important; background:#ff0055 !important; color:#fff !important; }
+    .cat-add-chip {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; padding: 6px 11px; border-radius: 999px;
+      background: transparent; border: 1.5px dashed var(--line); color: var(--violet); font-size: 11.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .add-cat-box { background: var(--field); border: 1px solid var(--line); border-radius: var(--r-md); padding: 9px; display: none; flex-direction: column; gap: 7px; }
+    .add-cat-box.open { display: flex; }
+
+    .enter-btn {
+      width: 100%; padding: 11px; border-radius: 14px; border: 0; background: var(--btn-bg); color: var(--btn-text);
+      font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+    }
+    .enter-btn:active { transform: scale(.985); }
+
+    .undo-bar {
+      display: none; align-items: center; justify-content: space-between; background: rgba(18,166,115,.16);
+      border: 1px solid rgba(18,166,115,.4); color: var(--green); padding: 8px 12px; border-radius: 12px; font-size: 11.5px; margin-bottom: 8px;
+    }
+    .undo-bar.show { display: flex; }
+    .undo-btn { background: none; border: 0; color: var(--text); font-size: 11.5px; font-weight: 700; text-decoration: underline; cursor: pointer; }
+
+    /* ===== LOGBOOK (COMPACT GLASS PANEL) ===== */
+    .dates-summary-bar {
+      display: flex; align-items: center; justify-content: space-between; margin: 2px 2px 6px;
+      font-size: 13px; font-weight: 700; color: var(--text);
+    }
+    #datesLedger {
+      --text: var(--sheet-text); --muted: var(--sheet-muted); --dim: var(--sheet-dim); --line: var(--sheet-line); --violet: var(--sheet-accent);
+      position: relative; background: var(--sheet-bg); color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 22px; padding: 18px 13px 10px;
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+    #datesLedger::before {
+      content: ""; position: absolute; top: 7px; left: 50%; width: 32px; height: 3.5px; margin-left: -16px;
+      border-radius: 4px; background: var(--sheet-dim); opacity: .55;
+    }
+    .note-date-section { padding: 2px 0 6px; margin-bottom: 2px; }
+    .note-date-header { display: flex; align-items: baseline; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+    .nd-left { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+    .nd-caret { font-size: 8.5px; color: var(--muted); display: inline-block; transition: transform .15s; }
+    .note-date-section.collapsed .nd-caret { transform: rotate(-90deg); }
+    .nd-title { font-size: 12px; font-weight: 700; color: var(--violet); }
+    .nd-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .nd-total { font-family: var(--num-font, var(--mono)); font-size: 12.5px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+    .nd-add-btn {
+      background: rgba(128, 150, 200, 0.14); border: 1px solid var(--line); color: var(--text); font-size: 9.5px; font-weight: 600; cursor: pointer; padding: 2px 8px; border-radius: 999px;
+    }
+    .note-items { padding: 3px 0 0; }
+    .note-date-section.collapsed .note-items { display: none; }
+    .exp-row { padding: 8px 2px; border-bottom: 1px solid var(--line); cursor: pointer; }
+    .exp-row:last-child { border-bottom: 0; }
+    .exp-main { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; line-height: 1.3; }
+    .exp-left { display: flex; align-items: baseline; gap: 6px; min-width: 0; flex-wrap: wrap; }
+    .exp-bullet { color: var(--violet); font-size: 11px; font-weight: 700; }
+    .exp-cat { font-size: 12.5px; font-weight: 600; color: var(--text); }
+    .exp-sub { font-size: 10.5px; color: var(--muted); }
+    .exp-note-tag { font-size: 10.5px; color: var(--dim); font-style: italic; }
+    .exp-amt { font-family: var(--num-font, var(--mono)); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text); flex-shrink: 0; }
+    .exp-detail { display: none; margin-top: 6px; padding: 4px 0 2px 12px; font-size: 10.5px; color: var(--muted); flex-direction: column; gap: 7px; }
+    .exp-row.expanded .exp-detail { display: flex; }
+    .exp-detail-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+    .calc-pill { font-family: var(--num-font, var(--mono)); color: var(--muted); font-size: 10.5px; }
+    .act-btns { display: flex; gap: 5px; }
+    .sm-btn { background: rgba(128, 150, 200, 0.12); border: 1px solid var(--line); color: var(--text); font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 999px; cursor: pointer; }
+    .sm-btn.del { color: var(--red); border-color: rgba(229, 72, 77, 0.35); }
+    .edit-box { display: flex; flex-direction: column; gap: 6px; background: rgba(128, 150, 200, 0.08); padding: 8px; border-radius: 12px; border: 1px solid var(--line); }
+    .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .edit-in {
+      background: var(--field); border: 1px solid var(--line); color: var(--text); font-size: 11px;
+      padding: 7px 9px; border-radius: 8px; outline: none; width: 100%; color-scheme: var(--color-scheme);
+    }
+    .edit-in option { color: #12256b; background: #fff; }
+    .empty-box { text-align: center; padding: 18px 12px; color: var(--dim); font-size: 11.5px; }
+
+    /* Idle delete hint hidden & sentence-case headings */
+    .acct-tile:not(.armed) .hint { display: none; }
+    #accountsHeaderLbl, #addExpenseHeaderLbl, #logbookTitleLbl {
+      display: inline-block;
+      text-transform: none;
+    }
+    .dates-summary-bar span { text-transform: none !important; letter-spacing: normal !important; }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-Prompt" id="brandPrompt">&gt;_</span>
+      <span id="brandTitle">expense</span>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="openSettingsBtn" title="Settings">settings</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <span class="modal-title">settings</span>
+        <button class="modal-close" id="closeSettingsBtn">close</button>
+      </div>
+
+      <div class="settings-sec">
+        <div class="settings-lbl">themes</div>
+        <div class="theme-grid">
+          <button class="theme-btn" data-theme-choice="dark">
+            <span class="theme-swatch" style="background:linear-gradient(135deg,#12358a,#060b1f);"></span>
+            <span>Dark</span>
+          </button>
+          <button class="theme-btn" data-theme-choice="light">
+            <span class="theme-swatch" style="background:linear-gradient(135deg,#ffffff 20%,#5bb8f0 60%,#2d7fd3);"></span>
+            <span>White</span>
+          </button>
+          <button class="theme-btn" data-theme-choice="mono">
+            <span class="theme-swatch" style="background:linear-gradient(135deg,#000000 50%,#888888 50%);"></span>
+            <span>Mono</span>
+          </button>
+          <button class="theme-btn" data-theme-choice="brainrot">
+            <span class="theme-swatch" style="background:conic-gradient(#39ff14, #ff007f, #00f0ff, #ffe600, #39ff14);"></span>
+            <span>Brainrot 💀</span>
+          </button>
+          <button class="theme-btn" data-theme-choice="neobrutalism" style="grid-column: span 2;">
+            <span class="theme-swatch" style="background:#FFD23F; border:2.5px solid #0A0A0A; box-shadow:3px 3px 0 #0A0A0A; border-radius:8px;"></span>
+            <span>Neo-Brutalism</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-sec">
+        <div class="settings-lbl">about</div>
+        <div class="about-box">
+          <strong>&gt;_ expense (v2)</strong><br>
+          Minimalist command-line inspired expense &amp; account tracker.<br>
+          • Mobile number keypad + quick math operator bar<br>
+          • Tap twice to delete accounts OR categories<br>
+          • Dark, White, Mono, Brainrot 💀 &amp; Neo-Brutalism themes<br>
+          • Offline local storage persistence
+        </div>
+      </div>
+
+      <div class="settings-sec">
+        <div class="settings-lbl">data</div>
+        <button class="icon-btn" id="clearAllBtn" style="width:100%;text-align:center;">reset app data</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <span id="accountsHeaderLbl">Accounts</span>
+    <div class="sec-head-right">
+      <button class="eye-btn" id="toggleAcctsBtn">
+        <span id="eyeLabel">hide</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="accountsWrap">
+    <div class="acct-strip" id="acctStrip"></div>
+    <div class="add-acct-box" id="addAcctBox">
+      <div class="add-row">
+        <span class="dot" id="previewColorDot" style="background:#34d399"></span>
+        <input class="mini-in" id="newAcctName" placeholder="Account name (bKash, Cash, Bank...)" maxlength="18" />
+      </div>
+      <div class="color-picker-row" id="acctColorPicker"></div>
+      <div class="add-row">
+        <input class="mini-in" id="newAcctBal" placeholder="Opening balance" type="tel" inputmode="decimal" />
+        <button class="mini-btn ghost" id="cancelAcctBtn">cancel</button>
+        <button class="mini-btn" id="saveAcctBtn">save</button>
+      </div>
+      <div class="auto-Badge">
+        <span>Pick a color (12 options) · Tap account tile twice to delete</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <span id="addExpenseHeaderLbl">Add expense</span>
+    <span id="targetDateIndicator" style="color:var(--violet);text-transform:none;font-size:11.5px;"></span>
+  </div>
+
+  <div class="entry-card">
+    <div class="entry-top-bar">
+      <label class="date-pill">
+        <span>📅</span>
+        <input type="date" id="expenseDateInput" />
+      </label>
+      <input type="text" class="note-in" id="expenseNoteInput" placeholder="Note (optional)" maxlength="40" />
+    </div>
+
+    <div class="prompt-wrap">
+      <div class="prompt-line">
+        <span class="chev">&gt;</span>
+        <!-- inputmode="decimal" triggers the phone's numeric keypad directly -->
+        <input class="expr-input" id="exprInput" placeholder="130 + 45" type="tel" inputmode="decimal" autocomplete="off" />
+        <span class="live-sum" id="liveSum">= 0</span>
+      </div>
+      <!-- Quick operator buttons so users on numeric keypad can insert + - * / ( ) effortlessly -->
+      <div class="math-op-bar" id="mathOpBar">
+        <button type="button" class="op-btn" data-op=" + ">+</button>
+        <button type="button" class="op-btn" data-op=" - ">−</button>
+        <button type="button" class="op-btn" data-op=" * ">×</button>
+        <button type="button" class="op-btn" data-op=" / ">÷</button>
+        <button type="button" class="op-btn" data-op="(">(</button>
+        <button type="button" class="op-btn" data-op=")">)</button>
+        <button type="button" class="op-btn" data-op="BACKSPACE">⌫</button>
+      </div>
+    </div>
+
+    <div class="h-line" id="catLine"></div>
+
+    <div class="add-cat-box" id="addCatBox">
+      <div class="add-row">
+        <span class="dot" id="previewCatColorDot" style="background:#38bdf8"></span>
+        <input class="mini-in" id="newCatName" placeholder="New category name..." maxlength="20" />
+        <button class="mini-btn ghost" id="cancelCatBtn">cancel</button>
+        <button class="mini-btn" id="saveCatBtn">save</button>
+      </div>
+      <div class="color-picker-row" id="catColorPicker"></div>
+    </div>
+
+    <div class="h-line" id="payAcctLine"></div>
+
+    <button class="enter-btn" id="enterExpenseBtn">
+      <span id="enterBtnText">enter expense</span>
+      <span>↵</span>
+    </button>
+  </div>
+
+  <div class="undo-bar" id="undoBar">
+    <span id="undoText">Saved</span>
+    <button class="undo-btn" id="undoBtn">undo</button>
+  </div>
+
+  <div class="dates-summary-bar">
+    <span><span id="logbookTitleLbl">Logbook</span> (<span id="uniqueDatesCount">0</span>d)</span>
+  </div>
+
+  <div id="datesLedger"></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'expense_tracker_apk_v1';
+const MAX_ACCOUNTS = 30;
+
+const TWELVE_COLORS = [
+  '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e',
+  '#10b981', '#14b8a6', '#06b6d4', '#38bdf8', '#60a5fa', '#a78bfa'
+];
+
+const BRAND_COLORS = {
+  bkash: '#ef4444',
+  nagad: '#f97316',
+  rocket: '#a78bfa',
+  upay: '#eab308',
+  cash: '#10b981',
+  bank: '#60a5fa',
+  card: '#a78bfa',
+  savings: '#14b8a6'
+};
+
+const DEFAULT_CATEGORIES = [
+  { name: 'Transport', color: '#38bdf8' },
+  { name: 'Food',      color: '#f97316' },
+  { name: 'Shopping',  color: '#ef4444' },
+  { name: 'Bills',     color: '#a78bfa' },
+  { name: 'Mobile',    color: '#10b981' },
+  { name: 'Education', color: '#60a5fa' },
+  { name: 'Health',    color: '#f59e0b' },
+  { name: 'Fun',       color: '#eab308' },
+  { name: 'Other',     color: '#14b8a6' }
+];
+
+function getTodayDateKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function normalizeDateKey(raw) {
+  if (!raw || typeof raw !== 'string') return getTodayDateKey();
+  const trimmed = raw.trim();
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(trimmed);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  const parsed = new Date(trimmed);
+  if (!isNaN(parsed.getTime())) {
+    return `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`;
+  }
+  return getTodayDateKey();
+}
+
+function formatDateHeading(dateKey) {
+  const key = normalizeDateKey(dateKey);
+  const [y, m, d] = key.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const base = `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
+  return key === getTodayDateKey() ? `${base} · Today` : base;
+}
+
+function evalMathExpr(str) {
+  if (!str || !String(str).trim()) return null;
+  const normalized = String(str).replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+  const cleaned = normalized.replace(/[^0-9+\-*/.() ]/g, '').trim();
+  if (!cleaned) return null;
+  try {
+    const tokens = cleaned.match(/(\d+\.?\d*|\.\d+|[+\-*/()])/g);
+    if (!tokens) return null;
+    let pos = 0;
+    function parseExpr() {
+      let val = parseTerm();
+      while (pos < tokens.length && (tokens[pos] === '+' || tokens[pos] === '-')) {
+        const op = tokens[pos++];
+        const r = parseTerm();
+        val = op === '+' ? val + r : val - r;
+      }
+      return val;
+    }
+    function parseTerm() {
+      let val = parseFactor();
+      while (pos < tokens.length && (tokens[pos] === '*' || tokens[pos] === '/')) {
+        const op = tokens[pos++];
+        const r = parseFactor();
+        val = op === '*' ? val * r : (r !== 0 ? val / r : 0);
+      }
+      return val;
+    }
+    function parseFactor() {
+      const t = tokens[pos++];
+      if (t === '(') {
+        const v = parseExpr();
+        if (tokens[pos] === ')') pos++;
+        return v;
+      }
+      if (t === '-') return -parseFactor();
+      if (t === '+') return parseFactor();
+      return parseFloat(t || '0');
+    }
+    const res = parseExpr();
+    return (typeof res === 'number' && isFinite(res) && res > 0) ? Math.round(res * 100) / 100 : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function pickAutoColor(name, existingList) {
+  const lower = (name || '').toLowerCase().trim();
+  for (const [k, col] of Object.entries(BRAND_COLORS)) {
+    if (lower.includes(k)) return col;
+  }
+  const used = new Set((existingList || []).map(a => a.color));
+  for (const c of TWELVE_COLORS) {
+    if (!used.has(c)) return c;
+  }
+  return TWELVE_COLORS[(existingList ? existingList.length : 0) % TWELVE_COLORS.length];
+}
+
+function formatBDT(n) {
+  return Number(n || 0).toLocaleString('en-IN');
+}
+
+function defaultState() {
+  const today = getTodayDateKey();
+  return {
+    theme: 'dark',
+    accountsHidden: false,
+    accounts: [
+      { id: 'acc_cash', name: 'Cash', balance: 2400, color: '#10b981' },
+      { id: 'acc_bkash', name: 'bKash', balance: 5200, color: '#ef4444' },
+      { id: 'acc_bank', name: 'Bank', balance: 18500, color: '#60a5fa' }
+    ],
+    categories: DEFAULT_CATEGORIES.map(c => ({ ...c })),
+    selectedCategory: 'Food',
+    selectedAccountId: 'acc_cash',
+    selectedDateKey: today,
+    collapsedDates: {},
+    expenses: [
+      { id: 'exp_1', dateKey: today, category: 'Transport', amount: 100, expr: '100', accountId: 'acc_cash', note: '', createdAt: 1 },
+      { id: 'exp_2', dateKey: today, category: 'Shopping',  amount: 500, expr: '350 + 150', accountId: 'acc_bkash', note: '', createdAt: 2 },
+      { id: 'exp_3', dateKey: today, category: 'Food',      amount: 200, expr: '200', accountId: 'acc_cash', note: '', createdAt: 3 }
+    ]
+  };
+}
+
+function consolidateSameDayCategoryExpenses(expenses) {
+  const result = [];
+  const lookup = new Map();
+  const chronological = [...expenses].reverse();
+  for (const raw of chronological) {
+    const e = {
+      ...raw,
+      dateKey: normalizeDateKey(raw.dateKey),
+      amount: Number(raw.amount) || 0
+    };
+    const key = `${e.dateKey}__${e.category}`;
+    if (!lookup.has(key)) {
+      lookup.set(key, e);
+      result.push(e);
+    } else {
+      const existing = lookup.get(key);
+      const prevExpr = existing.expr || String(existing.amount);
+      const addExpr = e.expr || String(e.amount);
+      existing.amount = Math.round((existing.amount + e.amount) * 100) / 100;
+      existing.expr = `${prevExpr} + ${addExpr}`;
+      if (e.note) {
+        existing.note = existing.note ? `${existing.note}, ${e.note}` : e.note;
+      }
+      existing.accountId = e.accountId || existing.accountId;
+    }
+  }
+  return result.reverse();
+}
+
+let state = loadState();
+let armedAccountId = null;
+let armedCategoryName = null;
+let expandedExpenseId = null;
+let editingExpenseId = null;
+let lastUndoAction = null;
+let selectedNewAcctColor = TWELVE_COLORS[6];
+let acctColorManuallyChosen = false;
+let selectedNewCatColor = TWELVE_COLORS[9];
+let resetArmed = false;
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.expenses) || !Array.isArray(parsed.accounts)) {
+      return defaultState();
+    }
+    if (parsed.theme === 'ocean') parsed.theme = 'mono';
+    parsed.theme = parsed.theme || 'dark';
+    if (!Array.isArray(parsed.categories) || parsed.categories.length === 0) {
+      parsed.categories = DEFAULT_CATEGORIES.map(c => ({ ...c }));
+    }
+    parsed.expenses = consolidateSameDayCategoryExpenses(parsed.expenses);
+    parsed.collapsedDates = parsed.collapsedDates || {};
+    parsed.selectedDateKey = normalizeDateKey(parsed.selectedDateKey);
+    return parsed;
+  } catch (e) {
+    return defaultState();
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {}
+}
+
+function applyTheme(themeName) {
+  const valid = ['dark', 'light', 'mono', 'brainrot', 'neobrutalism'].includes(themeName) ? themeName : 'dark';
+  state.theme = valid;
+  document.documentElement.setAttribute('data-theme', valid);
+  const meta = document.getElementById('metaThemeColor');
+  if (meta) {
+    const bgMap = {
+      light: '#e2effc',
+      mono: '#000000',
+      brainrot: '#0b0118',
+      neobrutalism: '#FFFDF5',
+      dark: '#02040a'
+    };
+    meta.setAttribute('content', bgMap[valid] || '#02040a');
+  }
+  document.querySelectorAll('[data-theme-choice]').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-choice') === valid);
+  });
+
+  // Dynamic UI lingo toggle while preserving sentence-case section headings
+  const isRot = valid === 'brainrot';
+  document.getElementById('brandPrompt').textContent = isRot ? '💀_' : '>_';
+  document.getElementById('brandTitle').textContent = isRot ? 'skibidi tax' : 'expense';
+  document.getElementById('accountsHeaderLbl').textContent = 'Accounts';
+  document.getElementById('addExpenseHeaderLbl').textContent = 'Add expense';
+  document.getElementById('enterBtnText').textContent = isRot ? 'lock in expense 🗿🔥' : 'enter expense';
+  document.getElementById('logbookTitleLbl').textContent = 'Logbook';
+}
+
+function renderColorPicker(containerId, currentColor, onSelect) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  TWELVE_COLORS.forEach(col => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'color-swatch-btn' + (col.toLowerCase() === currentColor.toLowerCase() ? ' selected' : '');
+    btn.style.background = col;
+    btn.addEventListener('click', () => { onSelect(col); });
+    container.appendChild(btn);
+  });
+}
+
+function setAcctPickerColor(col) {
+  selectedNewAcctColor = col;
+  const dot = document.getElementById('previewColorDot');
+  if (dot) dot.style.background = col;
+  renderColorPicker('acctColorPicker', selectedNewAcctColor, (chosen) => {
+    acctColorManuallyChosen = true;
+    setAcctPickerColor(chosen);
+  });
+}
+
+function setCatPickerColor(col) {
+  selectedNewCatColor = col;
+  const dot = document.getElementById('previewCatColorDot');
+  if (dot) dot.style.background = col;
+  renderColorPicker('catColorPicker', selectedNewCatColor, (chosen) => {
+    setCatPickerColor(chosen);
+  });
+}
+
+function groupExpensesByCalendarDate(expenses) {
+  const map = new Map();
+  for (const exp of expenses) {
+    const key = normalizeDateKey(exp.dateKey);
+    if (!map.has(key)) {
+      map.set(key, {
+        dateKey: key,
+        heading: formatDateHeading(key),
+        total: 0,
+        items: []
+      });
+    }
+    const group = map.get(key);
+    group.items.push(exp);
+    group.total = Math.round((group.total + Number(exp.amount || 0)) * 100) / 100;
+  }
+  return Array.from(map.values()).sort((a, b) => b.dateKey.localeCompare(a.dateKey));
+}
+
+function getAccountById(id) {
+  return state.accounts.find(a => a.id === id) || null;
+}
+
+function renderAll() {
+  applyTheme(state.theme);
+  saveState();
+
+  document.getElementById('eyeLabel').textContent = state.accountsHidden ? 'show' : 'hide';
+  document.getElementById('accountsWrap').style.display = state.accountsHidden ? 'none' : 'block';
+
+  const strip = document.getElementById('acctStrip');
+  strip.innerHTML = '';
+  state.accounts.forEach(acc => {
+    const isArmed = armedAccountId === acc.id;
+    const isSelectedPay = state.selectedAccountId === acc.id;
+    const tile = document.createElement('div');
+    tile.className = 'acct-tile' + (isArmed ? ' armed' : '');
+    tile.innerHTML = `
+      <div class="top">
+        <span class="top-left">
+          <span class="dot" style="background:${acc.color}"></span>
+          <span>${acc.name}</span>
+        </span>
+        <span class="acct-tag">${isSelectedPay ? 'ACTIVE' : '••'}</span>
+      </div>
+      <div class="bal">${formatBDT(acc.balance)}</div>
+      ${isArmed ? '<div class="hint">tap again to delete</div>' : ''}
+    `;
+    tile.addEventListener('click', () => {
+      if (armedAccountId === acc.id) {
+        state.accounts = state.accounts.filter(a => a.id !== acc.id);
+        if (state.selectedAccountId === acc.id) {
+          state.selectedAccountId = state.accounts[0] ? state.accounts[0].id : null;
+        }
+        armedAccountId = null;
+        renderAll();
+      } else {
+        armedAccountId = acc.id;
+        renderAll();
+      }
+    });
+    strip.appendChild(tile);
+  });
+
+  if (state.accounts.length < MAX_ACCOUNTS) {
+    const addBtn = document.createElement('button');
+    addBtn.className = 'acct-add';
+    addBtn.innerHTML = `<span class="plus">+ account</span>`;
+    addBtn.addEventListener('click', () => {
+      const box = document.getElementById('addAcctBox');
+      box.classList.toggle('open');
+      if (box.classList.contains('open')) {
+        acctColorManuallyChosen = false;
+        setAcctPickerColor(pickAutoColor('', state.accounts));
+        document.getElementById('newAcctName').focus();
+      }
+    });
+    strip.appendChild(addBtn);
+  }
+
+  const dateIn = document.getElementById('expenseDateInput');
+  if (dateIn.value !== state.selectedDateKey) {
+    dateIn.value = state.selectedDateKey;
+  }
+  document.getElementById('targetDateIndicator').textContent = formatDateHeading(state.selectedDateKey);
+
+  // Category chips with tap-twice-to-delete
+  const catLine = document.getElementById('catLine');
+  catLine.innerHTML = '';
+  const catList = state.categories || DEFAULT_CATEGORIES;
+  if (catList.length > 0 && !catList.some(c => c.name === state.selectedCategory)) {
+    state.selectedCategory = catList[0].name;
+  }
+
+  const catHintEl = document.getElementById('catHintLbl');
+  if (catHintEl) {
+    catHintEl.textContent = armedCategoryName ? `tap ${armedCategoryName} again to delete!` : '';
+  }
+
+  catList.forEach(cat => {
+    const active = state.selectedCategory === cat.name;
+    const isArmed = armedCategoryName === cat.name;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cat-chip' + (active ? ' active' : '') + (isArmed ? ' armed' : '');
+    if (active && !isArmed) {
+      btn.style.background = state.theme === 'mono' ? '#ffffff' : cat.color;
+    }
+    btn.innerHTML = isArmed
+      ? `<span class="dot" style="background:var(--red)"></span><span>✕ ${cat.name} (tap to del)</span>`
+      : `<span class="dot" style="background:${active ? '#0b0b0e' : cat.color}"></span><span>${cat.name}</span>`;
+
+    btn.addEventListener('click', () => {
+      if (armedCategoryName === cat.name) {
+        state.categories = state.categories.filter(c => c.name !== cat.name);
+        if (state.categories.length === 0) {
+          state.categories = [{ name: 'General', color: '#38bdf8' }];
+        }
+        state.selectedCategory = state.categories[0].name;
+        armedCategoryName = null;
+        showUndo(`Deleted category "${cat.name}"`);
+        renderAll();
+      } else if (state.selectedCategory === cat.name) {
+        armedCategoryName = cat.name;
+        renderAll();
+      } else {
+        state.selectedCategory = cat.name;
+        armedCategoryName = null;
+        renderAll();
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    });
+    catLine.appendChild(btn);
+  });
+
+  const addCatBtn = document.createElement('button');
+  addCatBtn.type = 'button';
+  addCatBtn.className = 'cat-add-chip';
+  addCatBtn.innerHTML = `<span>+ category</span>`;
+  addCatBtn.addEventListener('click', () => {
+    armedCategoryName = null;
+    const box = document.getElementById('addCatBox');
+    box.classList.toggle('open');
+    if (box.classList.contains('open')) {
+      setCatPickerColor(pickAutoColor('', state.categories));
+      document.getElementById('newCatName').focus();
+    }
+  });
+  catLine.appendChild(addCatBtn);
+
+  const payLine = document.getElementById('payAcctLine');
+  payLine.innerHTML = '';
+  if (state.accounts.length === 0) {
+    payLine.innerHTML = `<span style="font-size:11px;color:var(--dim);padding:4px;">Add an account above first</span>`;
+  } else {
+    if (!state.accounts.some(a => a.id === state.selectedAccountId)) {
+      state.selectedAccountId = state.accounts[0].id;
+    }
+    state.accounts.forEach(acc => {
+      const active = state.selectedAccountId === acc.id;
+      const btn = document.createElement('button');
+      btn.className = 'acct-chip' + (active ? ' active' : '');
+      if (active) {
+        btn.style.background = state.theme === 'mono' ? '#ffffff' : acc.color;
+      }
+      btn.innerHTML = `<span class="dot" style="background:${active ? '#0b0b0e' : acc.color}"></span><span>${acc.name}</span>`;
+      btn.addEventListener('click', () => {
+        state.selectedAccountId = acc.id;
+        renderAll();
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      payLine.appendChild(btn);
+    });
+  }
+
+  const groups = groupExpensesByCalendarDate(state.expenses);
+  document.getElementById('uniqueDatesCount').textContent = groups.length;
+
+  const ledgerEl = document.getElementById('datesLedger');
+  ledgerEl.innerHTML = '';
+
+  if (groups.length === 0) {
+    const emptyMsg = state.theme === 'brainrot'
+      ? 'Zero fanum tax logged. You have infinite aura rn 🤫🧏‍♂️'
+      : 'No notes yet. Enter an expense above to start your logbook.';
+    ledgerEl.innerHTML = `<div class="empty-box">${emptyMsg}</div>`;
+    return;
+  }
+
+  groups.forEach(group => {
+    const isCollapsed = !!state.collapsedDates[group.dateKey];
+    const section = document.createElement('div');
+    section.className = 'note-date-section' + (isCollapsed ? ' collapsed' : '');
+
+    const header = document.createElement('div');
+    header.className = 'note-date-header';
+    header.innerHTML = `
+      <div class="nd-left">
+        <span class="nd-caret">▼</span>
+        <span class="nd-title">${group.heading}</span>
+      </div>
+      <div class="nd-right">
+        <span class="nd-total">${formatBDT(group.total)}</span>
+        <button class="nd-add-btn" title="Add expense to this date">+ add</button>
+      </div>
+    `;
+
+    header.addEventListener('click', (e) => {
+      if (e.target.closest('.nd-add-btn')) {
+        e.stopPropagation();
+        state.selectedDateKey = group.dateKey;
+        state.collapsedDates[group.dateKey] = false;
+        renderAll();
+        document.getElementById('exprInput').focus();
+        return;
+      }
+      state.collapsedDates[group.dateKey] = !state.collapsedDates[group.dateKey];
+      renderAll();
+    });
+
+    const itemsWrap = document.createElement('div');
+    itemsWrap.className = 'note-items';
+
+    group.items.forEach(item => {
+      const acc = getAccountById(item.accountId);
+      const isExpanded = expandedExpenseId === item.id;
+      const isEditing = editingExpenseId === item.id;
+
+      const row = document.createElement('div');
+      row.className = 'exp-row' + (isExpanded ? ' expanded' : '');
+
+      row.innerHTML = `
+        <div class="exp-main">
+          <div class="exp-left">
+            <span class="exp-bullet">–</span>
+            <span class="exp-cat">${item.category}</span>
+            ${acc ? `<span class="exp-sub">(${acc.name})</span>` : ''}
+            ${item.note ? `<span class="exp-note-tag">· ${item.note}</span>` : ''}
+          </div>
+          <div class="exp-amt">${formatBDT(item.amount)}</div>
+        </div>
+        <div class="exp-detail">
+          <div class="exp-detail-top">
+            <span class="calc-pill">calc: ${item.expr || item.amount} = ${formatBDT(item.amount)}</span>
+            <div class="act-btns">
+              <button class="sm-btn edit-trigger">${isEditing ? 'close' : 'edit'}</button>
+              <button class="sm-btn del del-trigger">delete</button>
+            </div>
+          </div>
+          ${isEditing ? `
+            <div class="edit-box">
+              <div class="edit-grid">
+                <input class="edit-in edit-expr" value="${item.expr || item.amount}" placeholder="130 + 45" type="tel" inputmode="decimal" />
+                <input type="date" class="edit-in edit-date" value="${item.dateKey}" />
+              </div>
+              <div class="edit-grid">
+                <select class="edit-in edit-cat">
+                  ${(state.categories || DEFAULT_CATEGORIES).map(c => `<option value="${c.name}" ${c.name === item.category ? 'selected' : ''}>${c.name}</option>`).join('')}
+                </select>
+                <input class="edit-in edit-note" value="${item.note || ''}" placeholder="Note" />
+              </div>
+              <button class="mini-btn save-edit-btn" style="width:100%;">save changes</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      row.querySelector('.exp-main').addEventListener('click', () => {
+        expandedExpenseId = (expandedExpenseId === item.id) ? null : item.id;
+        editingExpenseId = null;
+        renderAll();
+      });
+
+      row.querySelector('.edit-trigger').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        editingExpenseId = (editingExpenseId === item.id) ? null : item.id;
+        renderAll();
+      });
+
+      row.querySelector('.del-trigger').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        deleteExpense(item.id);
+      });
+
+      if (isEditing) {
+        row.querySelector('.save-edit-btn').addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const newExpr = row.querySelector('.edit-expr').value.trim();
+          const newAmt = evalMathExpr(newExpr);
+          const newDate = normalizeDateKey(row.querySelector('.edit-date').value);
+          const newCat = row.querySelector('.edit-cat').value;
+          const newNote = row.querySelector('.edit-note').value.trim();
+          if (!newAmt || newAmt <= 0) return;
+
+          const diff = newAmt - item.amount;
+          const acct = getAccountById(item.accountId);
+          if (acct) acct.balance = Math.round((acct.balance - diff) * 100) / 100;
+
+          item.expr = newExpr;
+          item.amount = newAmt;
+          item.dateKey = newDate;
+          item.category = newCat;
+          item.note = newNote;
+
+          state.expenses = consolidateSameDayCategoryExpenses(state.expenses);
+          editingExpenseId = null;
+          renderAll();
+        });
+      }
+
+      itemsWrap.appendChild(row);
+    });
+
+    section.appendChild(header);
+    section.appendChild(itemsWrap);
+    ledgerEl.appendChild(section);
+  });
+}
+
+function addExpenseFromInput() {
+  const exprEl = document.getElementById('exprInput');
+  const noteEl = document.getElementById('expenseNoteInput');
+  const rawExpr = exprEl.value.trim();
+  const computed = evalMathExpr(rawExpr);
+  if (!computed || computed <= 0) {
+    exprEl.focus();
+    return;
+  }
+
+  armedCategoryName = null;
+  const dateKey = normalizeDateKey(state.selectedDateKey);
+  const category = state.selectedCategory;
+  const noteText = noteEl.value.trim();
+  const acct = getAccountById(state.selectedAccountId);
+  if (acct) {
+    acct.balance = Math.round((acct.balance - computed) * 100) / 100;
+  }
+
+  const existing = state.expenses.find(
+    e => normalizeDateKey(e.dateKey) === dateKey && e.category === category
+  );
+
+  if (existing) {
+    const snapshot = { ...existing };
+    const prevExpr = existing.expr || String(existing.amount);
+    existing.amount = Math.round((existing.amount + computed) * 100) / 100;
+    existing.expr = `${prevExpr} + ${rawExpr}`;
+    if (noteText) {
+      existing.note = existing.note ? `${existing.note}, ${noteText}` : noteText;
+    }
+    existing.accountId = state.selectedAccountId;
+
+    lastUndoAction = {
+      type: 'merge',
+      expenseId: existing.id,
+      previousSnapshot: snapshot,
+      addedAmount: computed,
+      paidAccountId: state.selectedAccountId
+    };
+    showUndo(`${category} updated to ${formatBDT(existing.amount)} (+${formatBDT(computed)})`);
+  } else {
+    const newExp = {
+      id: 'exp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+      dateKey,
+      category,
+      amount: computed,
+      expr: rawExpr,
+      accountId: state.selectedAccountId,
+      note: noteText,
+      createdAt: Date.now()
+    };
+    state.expenses.unshift(newExp);
+    lastUndoAction = { type: 'add', expense: newExp };
+    showUndo(`Added ${newExp.category} ${formatBDT(newExp.amount)} on ${formatDateHeading(dateKey)}`);
+  }
+
+  state.collapsedDates[dateKey] = false;
+  exprEl.value = '';
+  noteEl.value = '';
+  document.getElementById('liveSum').textContent = '= 0';
+  renderAll();
+}
+
+function deleteExpense(id) {
+  const idx = state.expenses.findIndex(e => e.id === id);
+  if (idx === -1) return;
+  const removed = state.expenses[idx];
+  const acct = getAccountById(removed.accountId);
+  if (acct) {
+    acct.balance = Math.round((acct.balance + removed.amount) * 100) / 100;
+  }
+  state.expenses.splice(idx, 1);
+  lastUndoAction = { type: 'delete', expense: removed };
+  showUndo(`Deleted ${removed.category} ${formatBDT(removed.amount)}`);
+  expandedExpenseId = null;
+  editingExpenseId = null;
+  renderAll();
+}
+
+let undoTimer = null;
+function showUndo(msg) {
+  const bar = document.getElementById('undoBar');
+  document.getElementById('undoText').textContent = msg;
+  bar.classList.add('show');
+  if (undoTimer) clearTimeout(undoTimer);
+  undoTimer = setTimeout(() => { bar.classList.remove('show'); }, 6000);
+}
+
+document.getElementById('undoBtn').addEventListener('click', () => {
+  if (!lastUndoAction) return;
+  if (lastUndoAction.type === 'add') {
+    const exp = lastUndoAction.expense;
+    state.expenses = state.expenses.filter(e => e.id !== exp.id);
+    const acct = getAccountById(exp.accountId);
+    if (acct) acct.balance = Math.round((acct.balance + exp.amount) * 100) / 100;
+  } else if (lastUndoAction.type === 'merge') {
+    const target = state.expenses.find(e => e.id === lastUndoAction.expenseId);
+    if (target) {
+      Object.assign(target, lastUndoAction.previousSnapshot);
+    }
+    const acct = getAccountById(lastUndoAction.paidAccountId);
+    if (acct) acct.balance = Math.round((acct.balance + lastUndoAction.addedAmount) * 100) / 100;
+  } else if (lastUndoAction.type === 'delete') {
+    const exp = lastUndoAction.expense;
+    state.expenses.unshift(exp);
+    state.expenses = consolidateSameDayCategoryExpenses(state.expenses);
+    const acct = getAccountById(exp.accountId);
+    if (acct) acct.balance = Math.round((acct.balance - exp.amount) * 100) / 100;
+  }
+  lastUndoAction = null;
+  document.getElementById('undoBar').classList.remove('show');
+  renderAll();
+});
+
+const settingsModal = document.getElementById('settingsModal');
+const clearAllBtn = document.getElementById('clearAllBtn');
+
+function disarmResetButton() {
+  resetArmed = false;
+  clearAllBtn.textContent = 'reset app data';
+}
+
+document.getElementById('openSettingsBtn').addEventListener('click', () => {
+  disarmResetButton();
+  settingsModal.classList.add('open');
+});
+document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+  disarmResetButton();
+  settingsModal.classList.remove('open');
+});
+settingsModal.addEventListener('click', (e) => {
+  if (e.target === settingsModal) {
+    disarmResetButton();
+    settingsModal.classList.remove('open');
+  }
+});
+
+document.querySelectorAll('[data-theme-choice]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyTheme(btn.getAttribute('data-theme-choice'));
+    renderAll();
+  });
+});
+
+const exprInputEl = document.getElementById('exprInput');
+exprInputEl.addEventListener('input', (e) => {
+  const val = evalMathExpr(e.target.value);
+  document.getElementById('liveSum').textContent = '= ' + formatBDT(val || 0);
+});
+
+exprInputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    addExpenseFromInput();
+  }
+});
+
+// Quick Math Operator Bar handler (keeps numeric keypad open on mobile!)
+document.querySelectorAll('#mathOpBar .op-btn').forEach(btn => {
+  btn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+  });
+  btn.addEventListener('click', () => {
+    const op = btn.getAttribute('data-op');
+    const start = exprInputEl.selectionStart ?? exprInputEl.value.length;
+    const end = exprInputEl.selectionEnd ?? exprInputEl.value.length;
+    const val = exprInputEl.value;
+
+    if (op === 'BACKSPACE') {
+      if (start !== end) {
+        exprInputEl.value = val.slice(0, start) + val.slice(end);
+        exprInputEl.setSelectionRange(start, start);
+      } else if (start > 0) {
+        exprInputEl.value = val.slice(0, start - 1) + val.slice(end);
+        exprInputEl.setSelectionRange(start - 1, start - 1);
+      }
+    } else {
+      exprInputEl.value = val.slice(0, start) + op + val.slice(end);
+      const nextPos = start + op.length;
+      exprInputEl.setSelectionRange(nextPos, nextPos);
+    }
+    exprInputEl.focus();
+    const computed = evalMathExpr(exprInputEl.value);
+    document.getElementById('liveSum').textContent = '= ' + formatBDT(computed || 0);
+  });
+});
+
+document.getElementById('enterExpenseBtn').addEventListener('click', addExpenseFromInput);
+
+document.getElementById('expenseDateInput').addEventListener('change', (e) => {
+  state.selectedDateKey = normalizeDateKey(e.target.value);
+  renderAll();
+});
+
+document.getElementById('toggleAcctsBtn').addEventListener('click', () => {
+  state.accountsHidden = !state.accountsHidden;
+  renderAll();
+});
+
+document.getElementById('newAcctName').addEventListener('input', (e) => {
+  if (!acctColorManuallyChosen) {
+    setAcctPickerColor(pickAutoColor(e.target.value, state.accounts));
+  }
+});
+
+document.getElementById('cancelAcctBtn').addEventListener('click', () => {
+  document.getElementById('addAcctBox').classList.remove('open');
+});
+
+document.getElementById('saveAcctBtn').addEventListener('click', () => {
+  if (state.accounts.length >= MAX_ACCOUNTS) return;
+  const nameEl = document.getElementById('newAcctName');
+  const balEl = document.getElementById('newAcctBal');
+  const name = nameEl.value.trim();
+  const bal = parseFloat(balEl.value) || 0;
+  if (!name) { nameEl.focus(); return; }
+  state.accounts.push({
+    id: 'acc_' + Date.now(),
+    name,
+    balance: bal,
+    color: selectedNewAcctColor || pickAutoColor(name, state.accounts)
+  });
+  state.selectedAccountId = state.accounts[state.accounts.length - 1].id;
+  nameEl.value = '';
+  balEl.value = '';
+  acctColorManuallyChosen = false;
+  document.getElementById('addAcctBox').classList.remove('open');
+  renderAll();
+});
+
+document.getElementById('cancelCatBtn').addEventListener('click', () => {
+  document.getElementById('addCatBox').classList.remove('open');
+});
+
+document.getElementById('saveCatBtn').addEventListener('click', () => {
+  const nameEl = document.getElementById('newCatName');
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+  if (!Array.isArray(state.categories)) {
+    state.categories = DEFAULT_CATEGORIES.map(c => ({ ...c }));
+  }
+  const existing = state.categories.find(c => c.name.toLowerCase() === name.toLowerCase());
+  if (existing) {
+    existing.color = selectedNewCatColor;
+    state.selectedCategory = existing.name;
+  } else {
+    state.categories.push({ name, color: selectedNewCatColor || TWELVE_COLORS[0] });
+    state.selectedCategory = name;
+  }
+  armedCategoryName = null;
+  nameEl.value = '';
+  document.getElementById('addCatBox').classList.remove('open');
+  renderAll();
+});
+
+clearAllBtn.addEventListener('click', () => {
+  if (!resetArmed) {
+    resetArmed = true;
+    clearAllBtn.textContent = 'tap again to confirm reset';
+    return;
+  }
+  const currentTheme = state.theme || 'dark';
+  state = {
+    theme: currentTheme,
+    accountsHidden: false,
+    accounts: [],
+    categories: DEFAULT_CATEGORIES.map(c => ({ ...c })),
+    selectedCategory: 'Food',
+    selectedAccountId: null,
+    selectedDateKey: getTodayDateKey(),
+    collapsedDates: {},
+    expenses: []
+  };
+  disarmResetButton();
+  settingsModal.classList.remove('open');
+  showUndo('App data reset');
+  renderAll();
+});
+
+setAcctPickerColor(pickAutoColor('', state.accounts));
+setCatPickerColor(pickAutoColor('', state.categories));
+renderAll();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
